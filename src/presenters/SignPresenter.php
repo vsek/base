@@ -9,7 +9,7 @@ use Nette\Application\UI\Form,
  *
  * @author Vsek
  */
-class SignPresenter extends BasePresenter{
+class SignPresenter extends BasePresenterM{
     
     /** @var \App\Model\User @inject */
     public $user;

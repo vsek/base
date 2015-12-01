@@ -11,7 +11,7 @@ use App\AdminModule\Form,
  *
  * @author Vsek
  */
-class UserPresenter extends BasePresenter{
+class UserPresenter extends BasePresenterM{
     /** @var \App\Model\User @inject */
     public $model;
     

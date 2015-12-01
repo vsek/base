@@ -11,7 +11,7 @@ use App\Grid\Column\Column,
  *
  * @author Vsek
  */
-class ResourcePresenter extends BasePresenter{
+class ResourcePresenter extends BasePresenterM{
     /** @var \App\Model\Resource @inject */
     public $resources;
     

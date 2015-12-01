@@ -9,7 +9,7 @@ use App\AdminModule\Form;
  *
  * @author Vsek
  */
-class SettingPresenter extends BasePresenter{
+class SettingPresenter extends BasePresenterM{
     /** @var \App\Model\Setting @inject */
     public $model;
     

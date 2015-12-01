@@ -11,7 +11,7 @@ use App\Grid\Column\Column,
  *
  * @author Vsek
  */
-class RolePresenter extends BasePresenter{
+class RolePresenter extends BasePresenterM{
     /** @var \App\Model\Role @inject */
     public $model;
     

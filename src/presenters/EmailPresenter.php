@@ -10,7 +10,7 @@ use App\AdminModule\Form,
  *
  * @author Vsek
  */
-class EmailPresenter extends BasePresenter{
+class EmailPresenter extends BasePresenterM{
     /** @var \App\Model\Email @inject */
     public $model;
     

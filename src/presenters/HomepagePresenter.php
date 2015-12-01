@@ -6,6 +6,6 @@ namespace App\AdminModule\Presenters;
  *
  * @author Vsek
  */
-class HomepagePresenter extends BasePresenter{
+class HomepagePresenter extends BasePresenterM{
 
 }

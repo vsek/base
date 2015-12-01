@@ -10,7 +10,7 @@ use App\Grid\Column\Column,
  *
  * @author Vsek
  */
-class PrivilegePresenter extends BasePresenter{
+class PrivilegePresenter extends BasePresenterM{
     
     /** @var \App\Model\Privilege @inject */
     public $privileges;
