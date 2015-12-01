@@ -1,0 +1,17 @@
+{* Latte template *}
+
+{block content}
+    <div class="login">
+        <div class="logo"></div>
+        {$formLogin->render('begin')}
+            {$formLogin->render('errors')}
+            {$formLogin['email']->control}
+            {$formLogin['password']->control}
+            
+            <div class="forgotPassword">
+                <a n:href="Sign:forgotPassword">{_'admin.email.forgotPassword'}</a>
+            </div>
+            
+            {$formLogin['send']->control}
+        {$formLogin->render('end')}
+    </div>

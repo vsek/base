@@ -1,0 +1,102 @@
+{**
+ * My Application layout template.
+ *
+ * @param string   $basePath web base path
+ * @param string   $robots   tell robots how to index the content of a page (optional)
+ * @param array    $flashes  flash messages
+ *}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+	<meta name="description" content="">
+	<meta name="robots" content="{$robots}" n:ifset="$robots">
+
+	<title>{block title|striptags}Nette Application Skeleton{/block}</title>
+
+        <link href='http://fonts.googleapis.com/css?family=Archivo+Narrow&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/js/jquery-ui-1.10.4.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css">
+        <link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/js/chosen_v1.1.0/chosen.min.css">
+        <link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/js/uploadifive/uploadifive.css">
+	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/admin/style.css">
+        <link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/admin/other.css">
+	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
+        
+        {block scripts}
+            <script src="{$basePath}/js/jquery-1.11.1.min.js"></script>
+            <script src="{$basePath}/js/chosen_v1.1.0/chosen.jquery.min.js"></script>
+            <script src="{$basePath}/js/live-form-validation-admin.js"></script>
+            <script src="{$basePath}/js/jquery-ui-1.10.4.custom/js/jquery-ui-1.10.4.custom.min.js"></script>
+            <script src="{$basePath}/js/uploadifive/jquery.uploadifive.min.js"></script>
+            <script src="{$basePath}/js/jquery-ui-timepicker-addon.js"></script>
+            <script src="{$basePath}/js/nette.ajax.js"></script>
+            <script src="{$basePath}/js/jquery.selectboxes.js"></script>
+            <script src="{$basePath}/js/admin.js"></script>
+	{/block}
+        
+	{block head}{/block}
+    </head>
+<body>
+	<script> document.documentElement.className+=' js' </script>
+        
+        <div class="top-orange"></div>
+        <div class="top">
+            <div class="logo"><a n:href="Homepage:default"><img src="/images/admin/logo.png" /></a></div>
+            <div class="login" n:if="$presenter->getUser()->isLoggedIn()">
+                <div class="left"></div>
+                <div class="middle">
+                    <span>
+                        {$presenter->getUser()->getIdentity()->name} {$presenter->getUser()->getIdentity()->surname},
+                        <a n:href="User:changePassword">{_'admin.user.changePassword'}</a>
+                    </span>
+                    <div class="logout">
+                        <a n:href="Sign:logout" title="{_'admin.sign.logout'}">{_'admin.sign.logout'}</a>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="content {if $presenter->getName() != 'Admin:Sign'}logged{/if}">
+            <nav class="menu" n:if="$presenter->getName() != 'Admin:Sign'">
+                <ul>
+                    <li n:if="$presenter->getUser()->isAllowed('email','default')"><a href="{link Email:default}" {if $presenter->getName() == 'Admin:Email'}class="active"{/if}><span class="item">{_'admin.email.emails'}</span><span class="arrow"></span></a></li>
+                    <li n:if="$presenter->getUser()->isAllowed('user','default')"><a href="{link User:default}" {if $presenter->getName() == 'Admin:User'}class="active"{/if}><span class="item">{_'admin.user.users'}</span><span class="arrow"></span></a></li>
+                    <li n:if="$presenter->getUser()->isAllowed('setting','default')"><a href="{link Setting:default}" {if $presenter->getName() == 'Admin:Setting'}class="active"{/if}><span class="item">{_'admin.setting.settings'}</span><span class="arrow"></span></a></li>
+                    <li n:if="$presenter->getUser()->isAllowed('role','default')"><a href="{link Role:default}" {if $presenter->getName() == 'Admin:Role'}class="active"{/if}><span class="item">{_'admin.role.roles'}</span><span class="arrow"></span></a></li>
+                    <li n:if="$presenter->getUser()->isAllowed('resource','default')"><a href="{link Resource:default}" {if $presenter->getName() == 'Admin:Resource'}class="active"{/if}><span class="item">{_'admin.resource.resources'}</span><span class="arrow"></span></a></li>
+                    <li n:if="$presenter->getUser()->isAllowed('privilege','default')"><a href="{link Privilege:default}" {if $presenter->getName() == 'Admin:Privilege'}class="active"{/if}><span class="item">{_'admin.privilege.privileges'}</span><span class="arrow"></span></a></li>
+                </ul>
+            </nav>
+            
+            <div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
+            
+            <div class="obsah">
+                {include content}
+            </div>
+            
+            <div class="clearfix"></div>
+        </div>
+        <div class="footer">
+            <div class="copywrite">
+                <p>{? echo date('Y') } {_'admin.text.copyright'}<br />
+                    {!_'admin.text.developed'}
+                </p>
+            </div>
+            <div class="technicSupport">
+                <span>{_'admin.text.technicSupport'}</span>
+            </div>
+            <div class="arrow"></div>
+            <div class="box">
+                <span>{_'admin.text.phone'}</span>
+            </div>
+            <div class="boxArrow"></div>
+            <div class="box">
+                <span class="email"><a href="mailto:{_'admin.text.email'}">{_'admin.text.email'}</a></span>
+            </div>
+            <div class="arrowLast"></div>
+            <div class="clearfix"></div>
+        </div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{* Latte template *}
+
+{block content}
+    <h2>{_'admin.role.settingPermission'}</h2>
+    
+    {include menu.latte}
+    
+    <h3>{_'admin.role.role', ['name' => $role['name']]} => {_'admin.resource.resource', ['name' => $resource['name']]}</h3>
+    
+    {control formSet}
