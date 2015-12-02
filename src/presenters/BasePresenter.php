@@ -25,6 +25,12 @@ abstract class BasePresenterM extends BasePresenter{
     /** @var \Nette\Caching\IStorage @inject*/
     public $storage;
     
+    /**
+     * Moduly zobrazujici se v levem menu
+     * @var array
+     */
+    protected $menuModules;
+    
     public function formatLayoutTemplateFiles(){
         $list = parent::formatLayoutTemplateFiles();
         $list[] = dirname(__FILE__) . '/../templates/@layout.latte';
@@ -76,18 +82,18 @@ abstract class BasePresenterM extends BasePresenter{
                 if(file_exists($vsekDir . $file . '/src/setting.xml')){
                     $xml = simplexml_load_file($vsekDir . $file . '/src/setting.xml');
                     if(isset($xml->presenter)){
-                        $presenters[] = array('name' => (string)$xml->presenter->name, 'resource' => (string)$xml->presenter->resource);
+                        $this->menuModules[] = array('name' => (string)$xml->presenter->name, 'resource' => (string)$xml->presenter->resource);
                     }
                 }
             }
         }
         closedir($ch);
-        $this->template->menuPresenters = $presenters;
     }
     
     public function beforeRender() {
         parent::beforeRender();
         $this->template->setTranslator($this->translator);
+        $this->template->menuPresenters = $this->menuModules;
     }
     
     public function getNameSimple(){
