@@ -62,7 +62,7 @@
             <nav class="menu" n:if="$presenter->getName() != 'Admin:Sign'">
                 <ul>
                     {foreach $menuPresenters as $menu}
-                        <li n:if="$presenter->getUser()->isAllowed($menu['resource'],'default')"><a n:href="$menu['name'] . ':default'" {if $presenter->getName() == 'Admin:' . $menu['name']}class="active"{/if}><span class="item">{_'page.name'}</span><span class="arrow"></span></a></li>
+                        <li n:if="$presenter->getUser()->isAllowed($menu['resource'],'default')"><a n:href="$menu['name'] . ':default'" {if $presenter->getName() == 'Admin:' . $menu['name']}class="active"{/if}><span class="item">{$presenter->translator->translate($menu['resource'] . '.' . $menu['resource'])}</span><span class="arrow"></span></a></li>
                     {/foreach}
                     <li n:if="$presenter->getUser()->isAllowed('email','default')"><a href="{link Email:default}" {if $presenter->getName() == 'Admin:Email'}class="active"{/if}><span class="item">{_'admin.email.emails'}</span><span class="arrow"></span></a></li>
                     <li n:if="$presenter->getUser()->isAllowed('user','default')"><a href="{link User:default}" {if $presenter->getName() == 'Admin:User'}class="active"{/if}><span class="item">{_'admin.user.users'}</span><span class="arrow"></span></a></li>
