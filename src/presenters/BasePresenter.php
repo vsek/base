@@ -25,9 +25,15 @@ abstract class BasePresenterM extends \App\Presenters\BasePresenter{
     /** @var \Nette\Caching\IStorage @inject*/
     public $storage;
     
+    public function formatLayoutTemplateFiles(){
+        $list = parent::formatLayoutTemplateFiles();
+        $list[] = dirname(__FILE__) . '/../templates/@layout.latte';
+        return $list;
+    }
+    
     public function startup() {
         parent::startup();
-        
+
         if($this->getName() != 'Admin:Sign' && !$this->user->isLoggedIn()){
             $this->redirect('Sign:default');
         }
@@ -60,6 +66,23 @@ abstract class BasePresenterM extends \App\Presenters\BasePresenter{
                 $this->redirect('Homepage:default');
             }
         }
+        
+        //projedu vsek moduly a pokusim se najit presentery
+        $presenters = array();
+        $vsekDir = dirname(__FILE__) . '/../../../';
+        $ch = opendir($vsekDir);
+        while (($file = readdir($ch)) !== false) {
+            if(!in_array($file, array('.', '..'))){
+                if(file_exists($vsekDir . $file . '/src/setting.xml')){
+                    $xml = simplexml_load_file($vsekDir . $file . '/src/setting.xml');
+                    if(isset($xml->presenter)){
+                        $presenters[] = array('name' => (string)$xml->presenter->name, 'resource' => (string)$xml->presenter->resource);
+                    }
+                }
+            }
+        }
+        closedir($ch);
+        $this->template->menuPresenters = $presenters;
     }
     
     public function beforeRender() {
