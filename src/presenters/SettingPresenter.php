@@ -1,6 +1,6 @@
 <?php
 
-namespace App\AdminModule\Presenters;
+namespace App\AdminModule\PresentersM;
 
 use App\AdminModule\Form;
 
@@ -9,7 +9,7 @@ use App\AdminModule\Form;
  *
  * @author Vsek
  */
-class SettingPresenter extends BasePresenterM{
+class SettingPresenterM extends \App\AdminModule\Presenters\BasePresenterM{
     /** @var \App\Model\Setting @inject */
     public $model;
     
@@ -17,7 +17,13 @@ class SettingPresenter extends BasePresenterM{
      *
      * @var \Nette\Database\Table\ActiveRow
      */
-    private $row = null;
+    protected $row = null;
+    
+    public function startup() {
+        parent::startup();
+        
+        $this->template->setFile(dirname(__FILE__) . '/../templates/Setting/default.latte');
+    }
     
     protected function createComponentFormEdit($name){
         $form = new Form($this, $name);
@@ -68,6 +74,6 @@ class SettingPresenter extends BasePresenterM{
     }
     
     public function actionDefault(){
-        $this->row = $this->model->where('id', 1)->fetch();
+        $this->row = $this->model->where('language_id', $this->language['id'])->fetch();
     }
 }
