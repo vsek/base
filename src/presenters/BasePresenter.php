@@ -25,11 +25,20 @@ abstract class BasePresenterM extends BasePresenter{
     /** @var \Nette\Caching\IStorage @inject*/
     public $storage;
     
+    /** @var \App\Model\Module\Language @inject */
+    public $languages;
+    
     /**
      * Moduly zobrazujici se v levem menu
      * @var array
      */
     protected $menuModules;
+    
+    /**
+     * Jazyk webu
+     * @persistent
+     */
+    public $webLanguage = 1;
     
     public function formatLayoutTemplateFiles(){
         $list = parent::formatLayoutTemplateFiles();
@@ -94,6 +103,8 @@ abstract class BasePresenterM extends BasePresenter{
         parent::beforeRender();
         $this->template->setTranslator($this->translator);
         $this->template->menuPresenters = $this->menuModules;
+        $this->template->languages = $this->languages->getAll();
+        $this->template->webLanguage = $this->webLanguage;
     }
     
     public function getNameSimple(){

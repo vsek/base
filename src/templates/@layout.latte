@@ -44,6 +44,9 @@
         <div class="top">
             <div class="logo"><a n:href="Homepage:default"><img src="/images/admin/logo.png" /></a></div>
             <div class="login" n:if="$presenter->getUser()->isLoggedIn()">
+                <select n:if="$languages->count() > 1" class="webLanguage">
+                    <option value="{$presenter->link('this', array('webLanguage' => $language['id']))}" n:foreach="$languages as $language" {if $language['id'] == $webLanguage}selected="selected"{/if}>{$language['shortcut']}</option>
+                </select>
                 <div class="left"></div>
                 <div class="middle">
                     <span>
