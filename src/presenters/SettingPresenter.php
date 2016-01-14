@@ -74,6 +74,6 @@ class SettingPresenterM extends \App\AdminModule\Presenters\BasePresenterM{
     }
     
     public function actionDefault(){
-        $this->row = $this->model->where('language_id', $this->language['id'])->fetch();
+        $this->row = $this->model->where('language_id', $this->webLanguage)->fetch();
     }
 }
