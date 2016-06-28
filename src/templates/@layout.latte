@@ -86,8 +86,8 @@
         </div>
         <div class="footer">
             <div class="copywrite">
-                <p>{? echo date('Y') } {_'admin.text.copyright'}<br />
-                    {!_'admin.text.developed'}
+                <p>{php echo date('Y') } {_'admin.text.copyright'}<br />
+                    {_'admin.text.developed'|noescape}
                 </p>
             </div>
             <div class="technicSupport">

@@ -99,7 +99,7 @@ class EmailPresenter extends BasePresenterM{
         
         $form->addSubmit('send', $this->translator->translate('admin.form.edit'));
         
-        $form->onSuccess[] = $this->submitFormEdit;
+        $form->onSuccess[] = [$this, 'submitFormEdit'];
         
         $form->setDefaults(array(
             'name' => $this->row->name,
@@ -152,7 +152,7 @@ class EmailPresenter extends BasePresenterM{
         
         $form->addSubmit('send', $this->translator->translate('admin.form.create'));
         
-        $form->onSuccess[] = $this->submitFormNew;
+        $form->onSuccess[] = [$this, 'submitFormNew'];
         
         return $form;
     }

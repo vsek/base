@@ -41,7 +41,7 @@ class GridEmailLog extends Grid{
         
         $form->setDefaults($this->filter);
         
-        $form->onSuccess[] = $this->submitFormFilter;
+        $form->onSuccess[] = [$this, 'submitFormFilter'];
         
         return $form;
     }

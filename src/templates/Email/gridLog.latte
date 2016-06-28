@@ -14,8 +14,8 @@
             <th n:if="count($menu) > 0"></th>
         </tr>
         <tr n:foreach="$model as $row" n:class="$iterator->isLast() ? last">
-            {? $isFirst = $iterator->isFirst()}
-            {? $isLast = $iterator->isLast()}
+            {php $isFirst = $iterator->isFirst()}
+            {php $isLast = $iterator->isLast()}
             {foreach $columns as $column}
                 <td n:class="$iterator->isFirst() ? first">{$column->output($row)}</td>
                 <td n:if="$iterator->isFirst() && !is_null($ordering)" class="ordering">

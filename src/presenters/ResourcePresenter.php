@@ -103,7 +103,7 @@ class ResourcePresenter extends BasePresenterM{
         
         $form->addSubmit('send', $this->translator->translate('admin.form.edit'));
         
-        $form->onSuccess[] = $this->submitFormEdit;
+        $form->onSuccess[] = [$this, 'submitFormEdit'];
         
         $defaults = array(
             'name' => $this->resource->name,
@@ -169,7 +169,7 @@ class ResourcePresenter extends BasePresenterM{
         $form->addGroup();
         $form->addSubmit('send', $this->translator->translate('admin.form.insert'));
         
-        $form->onSuccess[] = $this->submitFormNew;
+        $form->onSuccess[] = [$this, 'submitFormNew'];
         
         return $form;
     }

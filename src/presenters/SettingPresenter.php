@@ -50,7 +50,7 @@ class SettingPresenterM extends \App\AdminModule\Presenters\BasePresenterM{
         $form->addGroup();
         $form->addSubmit('send', $this->translator->translate('admin.form.edit'));
         
-        $form->onSuccess[] = $this->submitFormEdit;
+        $form->onSuccess[] = [$this, 'submitFormEdit'];
         
         $form->setDefaults($defaults);
         

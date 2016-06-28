@@ -42,7 +42,7 @@ class UserPresenter extends BasePresenterM{
                 ->addRule(Form::EQUAL, $this->translator->translate('admin.form.bothPasswordMustBeSame'), $form['password']);
         $form->addSubmit('send', $this->translator->translate('admin.form.change'));
         
-        $form->onSuccess[] = $this->submitFormChangePassword;
+        $form->onSuccess[] = [$this, 'submitFormChangePassword'];
                     
         
         return $form;
@@ -93,7 +93,7 @@ class UserPresenter extends BasePresenterM{
         $form->addGroup();
         $form->addSubmit('send', $this->translator->translate('admin.form.edit'));
         
-        $form->onSuccess[] = $this->submitFormEdit;
+        $form->onSuccess[] = [$this, 'submitFormEdit'];
         
         $form->setDefaults(array(
             'name' => $this->row->name,
@@ -157,7 +157,7 @@ class UserPresenter extends BasePresenterM{
         
         $form->addSubmit('send', $this->translator->translate('admin.form.create'));
         
-        $form->onSuccess[] = $this->submitFormNew;
+        $form->onSuccess[] = [$this, 'submitFormNew'];
         
         return $form;
     }
