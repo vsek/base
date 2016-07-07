@@ -8,7 +8,7 @@ use Nette;
  *
  * @author Vsek
  */
-abstract class BasePresenterM extends BasePresenter{
+abstract class BasePresenterM extends \App\Presenters\BasePresenter{
     
     /** @var \App\Model\Role @inject */
     public $roles;
