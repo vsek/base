@@ -46,7 +46,7 @@ class SignPresenter extends BasePresenterM{
         
         $form->addSubmit('send', $this->translator->translate('admin.form.createPassword'));
         
-        $form->onSubmit[] = $this->submitFormGeneratePassword;
+        $form->onSubmit[] = [$this, 'submitFormGeneratePassword'];
         
         return $form;
     }
@@ -107,7 +107,7 @@ class SignPresenter extends BasePresenterM{
         
         $form->addSubmit('send', $this->translator->translate('admin.form.sendPassword'));
         
-        $form->onSubmit[] = $this->submitFormForgotPassword;
+        $form->onSubmit[] = [$this, 'submitFormForgotPassword'];
         
         return $form;
     }
@@ -148,7 +148,7 @@ class SignPresenter extends BasePresenterM{
         
         $form->addSubmit('send', $this->translator->translate('admin.form.logIn'));
         
-        $form->onSubmit[] = $this->submitFormLogin;
+        $form->onSubmit[] = [$this, 'submitFormLogin'];
         
         return $form;
     }
