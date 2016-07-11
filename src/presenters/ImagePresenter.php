@@ -9,7 +9,7 @@ use Nette\Utils\Image;
  *
  * @author Vsek
  */
-class ImagePresenter extends BasePresenter{
+class ImagePresenter extends BasePresenterM{
     public function renderPreview($image, $width = null, $height = null, $sharpen = false){
         //nazev preview
         $previewName = explode('.', $image);
