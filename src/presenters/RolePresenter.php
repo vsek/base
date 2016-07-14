@@ -164,7 +164,7 @@ class RolePresenter extends BasePresenterM{
                 ->addRule(Form::FILLED, $this->translator->translate('admin.form.isRequired'));
         $form->addText('system_name', $this->translator->translate('admin.form.systemName'))
                 ->addRule(Form::FILLED, $this->translator->translate('admin.form.isRequired'))
-                ->addRule($this->valideFormEditSystemName, $this->translator->translate('admin.form.systemNameExist'));
+                ->addRule([$this, 'valideFormEditSystemName'], $this->translator->translate('admin.form.systemNameExist'));
         
         $form->addSubmit('send', $this->translator->translate('admin.form.edit'));
         
@@ -210,7 +210,7 @@ class RolePresenter extends BasePresenterM{
                 ->addRule(Form::FILLED, $this->translator->translate('admin.form.isRequired'));
         $form->addText('system_name', $this->translator->translate('admin.form.systemName'))
                 ->addRule(Form::FILLED, $this->translator->translate('admin.form.isRequired'))
-                ->addRule($this->valideFormNewSystemName, $this->translator->translate('admin.form.systemNameExist'));
+                ->addRule([$this, 'valideFormNewSystemName'], $this->translator->translate('admin.form.systemNameExist'));
         
         $form->addSubmit('send', $this->translator->translate('admin.form.insert'));
         
