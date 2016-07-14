@@ -10,19 +10,22 @@ use Nette\Security\IAuthenticator,
  *
  * @author Vsek
  */
-class Authenticator extends \Nette\Object implements IAuthenticator{
+class Authenticator extends \Nette\Object{
     
     /** @var \App\Model\User */
-    public $user;
+    public $users;
     
-    function __construct(\App\Model\User $user) {
+    /** @var \Nette\Security\User */
+    private $user;
+    
+    function __construct(\App\Model\User $users, \Nette\Security\User $user) {
         $this->user = $user;
+        $this->users = $users;
     }
     
-    public function authenticate(array $credentials) {
-        list($email, $password) = $credentials;
+    public function login($email, $password) {
         
-        $user = $this->user->where('email', $email)->fetch();
+        $user = $this->users->where('email', $email)->fetch();
         
         if(!$user){
             throw new AuthenticationException(IAuthenticator::IDENTITY_NOT_FOUND);
@@ -32,6 +35,6 @@ class Authenticator extends \Nette\Object implements IAuthenticator{
             throw new AuthenticationException(IAuthenticator::INVALID_CREDENTIAL);
         }
         
-        return new Identity($user['name'] . ' ' . $user['surname'], $user->role->system_name, $user);
+        $this->user->login(new Identity($user['id'], $user->role['system_name'], $user));
     }
 }

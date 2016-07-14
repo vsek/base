@@ -23,6 +23,12 @@ class SignPresenter extends BasePresenterM{
      */
     private $userRow = null;
     
+    /**
+     * @inject
+     * @var \App\AdminModule\Components\Authenticator
+     */
+    public $authenticator;
+    
     public function submitFormGeneratePassword(Form $form){
         $values = $form->getValues();
         $this->userRow->update(array('password' => md5($values['password']), 'hash' => NULL));
@@ -128,7 +134,7 @@ class SignPresenter extends BasePresenterM{
     public function submitFormLogin(Form $form){
         $values = $form->getValues();
         try{
-            $this->getUser()->login($values['email'], $values['password']);
+            $this->authenticator->login($values['email'], $values['password']);
             
             $this->redirect('Homepage:default');
         }  catch (AuthenticationException $e){
