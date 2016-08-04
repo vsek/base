@@ -11,7 +11,7 @@ use App\AdminModule\Form,
  *
  * @author Vsek
  */
-class UserPresenter extends BasePresenterM{
+class UserPresenterM extends BasePresenterM{
     /** @var \App\Model\User @inject */
     public $model;
     
@@ -23,6 +23,14 @@ class UserPresenter extends BasePresenterM{
      * @var \Nette\Database\Table\ActiveRow
      */
     private $row = null;
+    
+    public function actionNew(){
+        $this->template->setFile(dirname(__FILE__) . '/../templates/User/new.latte');
+    }
+    
+    public function actionDefault(){
+        $this->template->setFile(dirname(__FILE__) . '/../templates/User/default.latte');
+    }
     
     public function submitFormChangePassword(Form $form){
         $values = $form->getValues();
@@ -107,6 +115,7 @@ class UserPresenter extends BasePresenterM{
     
     public function actionEdit($id){
         $this->exist($id);
+        $this->template->setFile(dirname(__FILE__) . '/../templates/User/edit.latte');
     }
     
     public function actionDelete($id){
