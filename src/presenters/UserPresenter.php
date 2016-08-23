@@ -171,8 +171,8 @@ class UserPresenterM extends BasePresenterM{
         return $form;
     }
     
-    protected function createComponentGrid(){
-        $grid = new \App\Grid\Grid();
+    protected function createComponentGrid($name){
+        $grid = new \App\Grid\Grid($this, $name);
 
         $query = $this->model->getAll();
         if(!$this->getUser()->isInRole('super_admin')){

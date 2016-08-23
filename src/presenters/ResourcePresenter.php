@@ -174,8 +174,8 @@ class ResourcePresenter extends BasePresenterM{
         return $form;
     }
     
-    protected function createComponentGrid(){
-        $grid = new \App\Grid\Grid();
+    protected function createComponentGrid($name){
+        $grid = new \App\Grid\Grid($this, $name);
 
         $grid->setModel($this->resources->getAll());
         $grid->addColumn(new Column('name', $this->translator->translate('admin.form.name')));

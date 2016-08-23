@@ -107,8 +107,8 @@ class RolePresenter extends BasePresenterM{
         $this->template->role = $this->row;
     }
     
-    protected function createComponentGridResource(){
-        $grid = new \App\Grid\Grid();
+    protected function createComponentGridResource($name){
+        $grid = new \App\Grid\Grid($this, $name);
 
         $grid->setModel($this->modelResource->getAll());
         $grid->addColumn(new Column('name', $this->translator->translate('admin.form.name')));
@@ -219,8 +219,8 @@ class RolePresenter extends BasePresenterM{
         return $form;
     }
     
-    protected function createComponentGrid(){
-        $grid = new \App\Grid\Grid();
+    protected function createComponentGrid($name){
+        $grid = new \App\Grid\Grid($this, $name);
 
         $grid->setModel($this->model->getAll());
         $grid->addColumn(new Column('name', $this->translator->translate('admin.form.name')));
