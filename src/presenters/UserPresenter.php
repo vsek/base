@@ -22,7 +22,7 @@ class UserPresenterM extends BasePresenterM{
      *
      * @var \Nette\Database\Table\ActiveRow
      */
-    private $row = null;
+    protected $row = null;
     
     public function actionNew(){
         $this->template->setFile(dirname(__FILE__) . '/../templates/User/new.latte');
