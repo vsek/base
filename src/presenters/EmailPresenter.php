@@ -67,10 +67,12 @@ class EmailPresenter extends BasePresenterM{
        
         $data = array(
             'name' => $values->name,
-            'system_name' => $values->system_name,
             'text' => $values->text,
             'subject' => $values->subject,
         );
+        if($this->getUser()->isInRole('super_admin')){
+            $data['system_name'] = $values->system_name;
+        }
         $this->row->update($data);
                
         $this->flashMessage($this->translator->translate('admin.form.editSuccess'));
@@ -100,6 +102,10 @@ class EmailPresenter extends BasePresenterM{
         $form->addSubmit('send', $this->translator->translate('admin.form.edit'));
         
         $form->onSuccess[] = [$this, 'submitFormEdit'];
+        
+        if(!$this->getUser()->isInRole('super_admin')){
+            $form['system_name']->setDisabled();
+        }
         
         $form->setDefaults(array(
             'name' => $this->row->name,
