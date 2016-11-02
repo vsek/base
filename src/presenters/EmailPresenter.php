@@ -25,7 +25,7 @@ class EmailPresenter extends BasePresenterM{
     
     public function actionPreview($id){
         $this->exist($id);
-        $message = new \App\Mail($this);
+        $message = new \App\Email\Mail($this);
         $message->setHtmlBody($this->row['text']);
         echo $message->getText();
         $this->terminate();
