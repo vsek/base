@@ -27,7 +27,7 @@ class GridEmailLog extends Grid{
     }
     
     public function submitFormFilter(Form $form){
-        $this->filter = $form->getValues();
+        $this->filter = (array)$form->getValues();
         $this->getPresenter()->redirect('this');
     }
     
