@@ -10,7 +10,7 @@ use App\AdminModule\Form,
  *
  * @author Vsek
  */
-class EmailPresenter extends BasePresenterM{
+class EmailPresenterM extends BasePresenterM{
     /** @var \App\Model\Email @inject */
     public $model;
     
@@ -18,14 +18,26 @@ class EmailPresenter extends BasePresenterM{
      *
      * @var \Nette\Database\Table\ActiveRow
      */
-    private $row = null;
+    protected $row = null;
     
     /** @var \App\Model\EmailLog @inject */
     public $emailLogs;
     
+    public function actionLog() {
+        $this->template->setFile(dirname(__FILE__) . '/../templates/Email/log.latte');
+    }
+    
+    public function actionNew() {
+        $this->template->setFile(dirname(__FILE__) . '/../templates/Email/new.latte');
+    }
+    
+    public function actionDefault() {
+        $this->template->setFile(dirname(__FILE__) . '/../templates/Email/default.latte');
+    }
+    
     public function actionPreview($id){
         $this->exist($id);
-        $message = new \App\Mail($this);
+        $message = new \App\Email\Mail($this);
         $message->setHtmlBody($this->row['text']);
         echo $message->getText();
         $this->terminate();
@@ -67,10 +79,12 @@ class EmailPresenter extends BasePresenterM{
        
         $data = array(
             'name' => $values->name,
-            'system_name' => $values->system_name,
             'text' => $values->text,
             'subject' => $values->subject,
         );
+        if($this->getUser()->isInRole('super_admin')){
+            $data['system_name'] = $values->system_name;
+        }
         $this->row->update($data);
                
         $this->flashMessage($this->translator->translate('admin.form.editSuccess'));
@@ -101,6 +115,10 @@ class EmailPresenter extends BasePresenterM{
         
         $form->onSuccess[] = [$this, 'submitFormEdit'];
         
+        if(!$this->getUser()->isInRole('super_admin')){
+            $form['system_name']->setDisabled();
+        }
+        
         $form->setDefaults(array(
             'name' => $this->row->name,
             'text' => $this->row->text,
@@ -114,6 +132,7 @@ class EmailPresenter extends BasePresenterM{
     
     public function actionEdit($id){
         $this->exist($id);
+        $this->template->setFile(dirname(__FILE__) . '/../templates/Email/new.latte');
     }
     
     public function actionDelete($id){
