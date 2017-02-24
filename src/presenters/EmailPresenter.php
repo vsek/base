@@ -132,7 +132,7 @@ class EmailPresenterM extends BasePresenterM{
     
     public function actionEdit($id){
         $this->exist($id);
-        $this->template->setFile(dirname(__FILE__) . '/../templates/Email/new.latte');
+        $this->template->setFile(dirname(__FILE__) . '/../templates/Email/edit.latte');
     }
     
     public function actionDelete($id){
