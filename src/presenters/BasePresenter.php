@@ -39,6 +39,12 @@ abstract class BasePresenterM extends BasePresenter{
      * @persistent
      */
     public $webLanguage = 1;
+
+    /**
+     * Slouzi k vypnuti nastaveni prav, musi se udelat v base presenteru aplikace
+     * @var bool
+     */
+    protected $disablePrivilegeSetting = false;
     
     public function formatLayoutTemplateFiles(){
         $list = parent::formatLayoutTemplateFiles();
@@ -53,14 +59,16 @@ abstract class BasePresenterM extends BasePresenter{
             $this->redirect('Sign:default');
         }
         //nastavim prava
-        foreach($this->roles->getAll() as $role){
-            $this->acl->addRole($role['system_name']);
-        }
-        foreach($this->resources->getAll() as $resource){
-            $this->acl->addResource($resource['system_name']);
-        }
-        foreach($this->permissions->getAll() as $permission){
-            $this->acl->allow($permission->role->system_name, $permission->resource->system_name, $permission->privilege->system_name);
+        if(!$this->disablePrivilegeSetting) {
+            foreach ($this->roles->getAll() as $role) {
+                $this->acl->addRole($role['system_name']);
+            }
+            foreach ($this->resources->getAll() as $resource) {
+                $this->acl->addResource($resource['system_name']);
+            }
+            foreach ($this->permissions->getAll() as $permission) {
+                $this->acl->allow($permission->role->system_name, $permission->resource->system_name, $permission->privilege->system_name);
+            }
         }
         $this->acl->addRole('super_admin');
         $this->acl->allow('super_admin');
