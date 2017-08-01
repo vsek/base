@@ -117,6 +117,7 @@ class RolePresenterM extends BasePresenterM{
         $this->exist($this->roleId);
         $this->template->resource = $this->resource;
         $this->template->role = $this->row;
+        $this->template->setFile(dirname(__FILE__) . '/../templates/Role/set.latte');
     }
     
     protected function createComponentGridResource($name){
@@ -139,6 +140,7 @@ class RolePresenterM extends BasePresenterM{
         $this->exist($id);
         $this->roleId = $this->row['id'];
         $this->template->role = $this->row;
+        $this->template->setFile(dirname(__FILE__) . '/../templates/Role/permission.latte');
     }
     
     public function actionDelete($id){
