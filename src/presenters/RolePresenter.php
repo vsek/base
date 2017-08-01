@@ -29,13 +29,13 @@ class RolePresenterM extends BasePresenterM{
      *
      * @var \Nette\Database\Table\ActiveRow
      */
-    private $row = null;
+    protected $row = null;
     
     /**
      *
      * @var \Nette\Database\Table\ActiveRow
      */
-    private $resource = null;
+    protected $resource = null;
     
     /**
      *
