@@ -1,6 +1,7 @@
 <?php
 namespace App\AdminModule\Presenters;
 
+use App\AdminModule\Components\Authorizator;
 use Nette;
 
 /**
@@ -39,12 +40,6 @@ abstract class BasePresenterM extends BasePresenter{
      * @persistent
      */
     public $webLanguage = 1;
-
-    /**
-     * Slouzi k vypnuti nastaveni prav, musi se udelat v base presenteru aplikace
-     * @var bool
-     */
-    protected $disablePrivilegeSetting = false;
     
     public function formatLayoutTemplateFiles(){
         $list = parent::formatLayoutTemplateFiles();
@@ -59,8 +54,9 @@ abstract class BasePresenterM extends BasePresenter{
             $this->redirect('Sign:default');
         }
         //nastavim prava
-        if(!$this->disablePrivilegeSetting) {
-            foreach ($this->roles->getAll() as $role) {
+        $role = $this->roles->where('NOT system_name', 'super_admin')->limit(1)->fetch();
+        if(!$this->acl->hasRole($role['system_name'])){
+            foreach ($this->roles->where('NOT system_name', 'super_admin') as $role) {
                 $this->acl->addRole($role['system_name']);
             }
             foreach ($this->resources->getAll() as $resource) {
@@ -75,9 +71,9 @@ abstract class BasePresenterM extends BasePresenter{
         
         //homepage a sign maji pristup vsichni
         $this->acl->addResource('homepage');
-        $this->acl->allow(\App\AdminModule\Components\Authorizator::ALL, 'homepage');
+        $this->acl->allow(Authorizator::ALL, 'homepage');
         $this->acl->addResource('sign');
-        $this->acl->allow(\App\AdminModule\Components\Authorizator::ALL, 'sign');
+        $this->acl->allow(Authorizator::ALL, 'sign');
         
         //vychozi role
         $this->acl->addRole('guest');
