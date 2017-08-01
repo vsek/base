@@ -5,13 +5,17 @@ namespace App\AdminModule\Presenters;
 use App\Grid\Column\Column,
     \App\Grid\Column\HasManyPermission,
     App\AdminModule\Form;
+use App\Grid\Grid;
+use App\Grid\Menu\Update;
+use Nette\Forms\Controls\TextInput;
+use Nette\Utils\Strings;
 
 /**
  * Description of RolePresenter
  *
  * @author Vsek
  */
-class RolePresenter extends BasePresenterM{
+class RolePresenterM extends BasePresenterM{
     /** @var \App\Model\Role @inject */
     public $model;
     
@@ -39,12 +43,20 @@ class RolePresenter extends BasePresenterM{
      * @persistent
      */
     public $roleId = null;
+
+    public function actionNew(){
+        $this->template->setFile(dirname(__FILE__) . '/../templates/Role/new.latte');
+    }
+
+    public function actionDefault(){
+        $this->template->setFile(dirname(__FILE__) . '/../templates/Role/default.latte');
+    }
     
      public function submitFormSet(Form $form){
         $values = $form->getValues();
         
         foreach($values as $key => $val){
-            if(\Nette\Utils\Strings::startsWith($key, 'privilege_')){
+            if(Strings::startsWith($key, 'privilege_')){
                 $id = explode('_', $key);
                 if($val){
                     if(!$this->permissions->where('role_id = ?', $this->row['id'])->where('resource_id = ?', $this->resource['id'])->where('privilege_id = ?', $id[1])->fetch()){
@@ -108,7 +120,7 @@ class RolePresenter extends BasePresenterM{
     }
     
     protected function createComponentGridResource($name){
-        $grid = new \App\Grid\Grid($this, $name);
+        $grid = new Grid($this, $name);
 
         $grid->setModel($this->modelResource->getAll());
         $grid->addColumn(new Column('name', $this->translator->translate('admin.form.name')));
@@ -116,7 +128,7 @@ class RolePresenter extends BasePresenterM{
         $grid->addColumn(new HasManyPermission('name', $this->translator->translate('admin.privilege.privileges'), $this->getParameter('roleId')));
         $grid->addColumn(new Column('id', $this->translator->translate('admin.grid.id')));
         
-        $grid->addMenu(new \App\Grid\Menu\Update('set', $this->translator->translate('admin.form.set')));
+        $grid->addMenu(new Update('set', $this->translator->translate('admin.form.set')));
         
         $grid->setOrder('name');
         
@@ -148,7 +160,7 @@ class RolePresenter extends BasePresenterM{
         $this->redirect('edit', $this->row->id);
     }
     
-    public function valideFormEditSystemName(\Nette\Forms\Controls\TextInput $input){
+    public function valideFormEditSystemName(TextInput $input){
         $resource = $this->model->where('system_name = ? AND id <> ?', array($input->getValue(), $this->row->id));
         if(!$resource->fetch()){
             return true;
@@ -180,9 +192,10 @@ class RolePresenter extends BasePresenterM{
     
     public function actionEdit($id){
         $this->exist($id);
+        $this->template->setFile(dirname(__FILE__) . '/../templates/Role/edit.latte');
     }
     
-    public function valideFormNewSystemName(\Nette\Forms\Controls\TextInput $input){
+    public function valideFormNewSystemName(TextInput $input){
         $resource = $this->model->where('system_name', $input->getValue());
         if(!$resource->fetch()){
             return true;
@@ -220,14 +233,14 @@ class RolePresenter extends BasePresenterM{
     }
     
     protected function createComponentGrid($name){
-        $grid = new \App\Grid\Grid($this, $name);
+        $grid = new Grid($this, $name);
 
         $grid->setModel($this->model->getAll());
         $grid->addColumn(new Column('name', $this->translator->translate('admin.form.name')));
         $grid->addColumn(new Column('system_name', $this->translator->translate('admin.form.systemName')));
         $grid->addColumn(new Column('id', $this->translator->translate('admin.grid.id')));
         
-        $grid->addMenu(new \App\Grid\Menu\Update('edit', $this->translator->translate('admin.form.edit')));
+        $grid->addMenu(new Update('edit', $this->translator->translate('admin.form.edit')));
         $grid->addMenu(new \App\Grid\Menu\Menu('permission', $this->translator->translate('admin.role.setPermission')));
         $grid->addMenu(new \App\Grid\Menu\Delete('delete', $this->translator->translate('admin.grid.delete')));
         
