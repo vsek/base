@@ -4,14 +4,16 @@ namespace App\AdminModule\Components;
 use Nette\Security\IAuthenticator,
     Nette\Security\AuthenticationException,
  Nette\Security\Identity;
+use Nette\SmartObject;
 
 /**
  * Description of Authenticator
  *
  * @author Vsek
  */
-class Authenticator extends \Nette\Object{
-    
+class Authenticator{
+    use SmartObject;
+
     /** @var \App\Model\User */
     public $users;
     
