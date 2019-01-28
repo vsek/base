@@ -116,7 +116,7 @@ class EmailPresenterM extends BasePresenterM{
             ->addRule(Form::FILLED, $this->translator->translate('admin.form.isRequired'));
         $form->addTextArea('subject', $this->translator->translate('admin.email.subject'))
             ->addRule(Form::FILLED, $this->translator->translate('admin.form.isRequired'));
-        $form->addSpawEditor('text', $this->translator->translate('admin.form.text'));
+        $form->addCkEditor('text', $this->translator->translate('admin.form.text'));
         $form->addTextArea('modifier', $this->translator->translate('admin.form.modifier'))->setDisabled();
 
         $form->addSubmit('send', $this->translator->translate('admin.form.edit'));
@@ -175,7 +175,7 @@ class EmailPresenterM extends BasePresenterM{
             ->addRule(Form::FILLED, $this->translator->translate('admin.form.isRequired'));
         $form->addTextArea('subject', $this->translator->translate('admin.email.subject'))
             ->addRule(Form::FILLED, $this->translator->translate('admin.form.isRequired'));
-        $form->addSpawEditor('text', $this->translator->translate('admin.form.text'));
+        $form->addCkEditor('text', $this->translator->translate('admin.form.text'));
         $form->addTextArea('modifier', $this->translator->translate('admin.form.modifier'));
 
         $form->addSubmit('send', $this->translator->translate('admin.form.create'));
