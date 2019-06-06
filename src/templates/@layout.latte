@@ -32,7 +32,7 @@
             <script src="{$basePath}/js/jquery-ui-timepicker-addon.js"></script>
             <script src="{$basePath}/js/nette.ajax.js"></script>
             <script src="{$basePath}/js/jquery.selectboxes.js"></script>
-            <script src="{$basePath}/js/admin.js"></script>
+            <script src="{$basePath}/js/admin.js?v={php echo(md5(file_get_contents($presenter->context->parameters['wwwDir'] . '/js/admin.js')))}"></script>
 	{/block}
         
 	{block head}{/block}
